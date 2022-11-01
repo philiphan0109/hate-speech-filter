@@ -1,7 +1,4 @@
-
-// Insert your own replacements for these words here (if you know what they are)
-// Remove the slashes in line 101 and comment out the previous line to implement these custom words 
-// However, the YouTube video censoring will not work if you do this.
+// Insert your own replacements for these words here (if you know what they are) 
 
 badWords = {
     "shpx": "",
@@ -65,19 +62,6 @@ decryptionKey = {
     " ":" "
 };
 
-async function query(data) {
-	const response = await fetch(
-		"https://api-inference.huggingface.co/models/pysentimiento/bertweet-hate-speech",
-		{
-			headers: { Authorization: "Bearer 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" },
-			method: "POST",
-			body: JSON.stringify(data),
-		}
-	);
-	const result = await response.json();
-	return result;
-}
-
 setTimeout(findText(document.body), 1000) // After a second of load time
 
 const observer = new MutationObserver((mutations) => {
@@ -93,14 +77,10 @@ observer.observe(document.body,
     });
 
 function findText(element) {
-    // query({"inputs": "I like you. I love you"}).then((response) => {
-    //     console.log(JSON.stringify(response));
-    // });
     if (element.hasChildNodes()) {
         element.childNodes.forEach(findText); // Dig deeper in the DOM
     } 
     else if (element.nodeType === Text.TEXT_NODE) {
-        // console.log(element);
         replaceText(element);
     }
     
@@ -118,8 +98,6 @@ function replaceText(textElement) {
             // So we can read variables as strings
             var sRegExpInput = new RegExp(decryptedBadWord, "gi");
             textElement.textContent = textElement.textContent.replace(sRegExpInput, " ████ ");
-            // eval(`textElement.textContent = textElement.textContent.replace(/${decryptedBadWord}/gi, "*${badWords[encryptedBadWord]}*")`);
-            // eval(`textElement.textContent = textElement.textContent.replace(/ ${decryptedBadWord} /gi, " ████ ")`);
         }
         // For YouTube subtitles
         else {
@@ -133,7 +111,6 @@ function replaceText(textElement) {
             }
             catch(Exception) {} // pass
         }
-
     }
     // Get rid of added spaces.
     textElement.textContent = textElement.textContent.slice(1, textElement.textContent.length - 1);

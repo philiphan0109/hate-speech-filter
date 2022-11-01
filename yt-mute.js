@@ -133,7 +133,7 @@ const individualLineCaptionObserver = new MutationObserver((mutations) => {
 });
 
 function censorWord(textNode) {
-  // DEBUGGER console.log(textNode)
+    console.log(textNode)
     if (textNode.includes("████")) {
         video.muted = true;
         unMute(video);
@@ -144,6 +144,6 @@ function censorWord(textNode) {
 function unMute(theVideo) {
     setTimeout(() => {
         theVideo.muted = false;
-    }, 700);
+    }, 1500);
 }
 
